@@ -1,0 +1,2 @@
+/*===========================================================================================	Proyecto					:		Modulo						:		Programa/Funcion			:	 	Analista					:	ALDV	Fecha Inicio/Termino		:		Objetivo					:	Visualizar Base de Datos	Descripcion					:	Si la base de datos no tiene una collección no muestra									la base de datos=============================================================================================*/// 1. Visualizar base de datos use aemsaprueba
+show dbs
