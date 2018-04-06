@@ -1,4 +1,4 @@
-/*===========================================================================================	Proyecto					:		Modulo						:		Programa/Funcion			:	 	Analista					:	ALDV	Fecha Inicio/Termino		:		Objetivo					:	Crear una colección de datos, que se graba en formato BSON.									sin embargo se define en formato JSON.	Descripcion					:	=============================================================================================*/USE master// 1. Activar el uso de una base de datos
+/*===========================================================================================	Proyecto					:		Modulo						:		Programa/Funcion			:	 	Analista					:	ALDV	Fecha Inicio/Termino		:		Objetivo					:	Crear una colección de datos, que se graba en formato BSON.									sin embargo se define en formato JSON.	Descripcion					:	=============================================================================================*/// 1. Activar el uso de una base de datos
 use aemsadesarrollo
 
 // 2. Crear una collección, si la colección no existe se crear
