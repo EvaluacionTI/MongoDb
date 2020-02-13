@@ -1,0 +1,20 @@
+# Iniciar de Mongo en Linux - Ubuntu 14
+
+## 1. Concepto
+	
+	Iniciar una instancia de MongoDB
+	
+## 1. Comprobar el servicios y la base de datos
+
+	p028036@OPME:~$ mongo --eval 'db.runCommand({connectionStatus:1})'
+		MongoDB shell version v3.6.3
+		connecting to: mongodb://127.0.0.1:27017
+		MongoDB server version: 3.6.3
+		{
+			"authInfo" : {
+				"authenticatedUsers" : [ ],
+				"authenticatedUserRoles" : [ ]
+			},
+			"ok" : 1
+		}
+	p028036@OPME:~$

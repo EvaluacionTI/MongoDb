@@ -1,0 +1,77 @@
+# Iniciar de Mongo en Linux - Ubuntu 14
+
+## 1. Concepto
+	
+	Iniciar una instancia de MongoDB
+	
+## 1. Start MongoDB
+	
+	p028036@MongoElastic:~$sudo service mongodb start
+	p028036@OPME:~$ sudo systemctl start mongodb
+	
+	p028036@OPME:~$ sudo systemctl status mongodb
+		● mongodb.service - An object/document-oriented database
+		Loaded: loaded (/lib/systemd/system/mongodb.service; enabled; vendor pres
+		Active: active (running) since Thu 2020-02-13 17:32:52 -05; 4s ago
+			Docs: man:mongod(1)
+		Main PID: 3788 (mongod)
+			Tasks: 23 (limit: 4673)
+		CGroup: /system.slice/mongodb.service
+				└─3788 /usr/bin/mongod --unixSocketPrefix=/run/mongodb --config /
+		
+		feb 13 17:32:52 OPME systemd[1]: Started An object/document-oriented databas
+		lines 1-10/10 (END)
+
+	
+## 2. Verify that MongoDB has started successfully
+
+	p028036@MongoElastic:~$vim /var/log/mongodb/mongod.log
+
+## 3. Stop MongoDB
+
+	p028036@MongoElastic:~$sudo service mongodb stop
+	p028036@MongoElastic:~$sudo systemctl stop mongodb
+	
+	p028036@OPME:~$ sudo systemctl status mongodb
+		● mongodb.service - An object/document-oriented database
+		Loaded: loaded (/lib/systemd/system/mongodb.service; enabled; vendor pres
+		Active: inactive (dead) since Thu 2020-02-13 17:30:30 -05; 27s ago
+			Docs: man:mongod(1)
+		Process: 3118 ExecStart=/usr/bin/mongod --unixSocketPrefix=${SOCKETPATH} -
+		Main PID: 3118 (code=exited, status=0/SUCCESS)
+		
+		feb 13 17:24:34 OPME systemd[1]: Started An object/document-oriented databas
+		feb 13 17:30:30 OPME systemd[1]: Stopping An object/document-oriented databa
+		feb 13 17:30:30 OPME systemd[1]: Stopped An object/document-oriented databas
+		lines 1-10/10 (END)
+
+## 4. Restart MongoDB
+
+	p028036@MongoElastic:~$sudo service mongod restart
+	
+## 5. Begin using MongoDB
+
+	
+	p028036@MongoElastic:~$mongo	
+
+
+## 6. Estatus de mongo
+
+	p028036@OPME:~$ sudo service mongodb status
+	p028036@OPME:~$ sudo systemctl status mongodb
+	
+	:::
+		p028036@OPME:~$ sudo systemctl status mongodb
+		● mongodb.service - An object/document-oriented database
+		Loaded: loaded (/lib/systemd/system/mongodb.service; enabled; vendor pres
+		Active: active (running) since Thu 2020-02-13 17:24:34 -05; 2min 34s ago
+			Docs: man:mongod(1)
+		Main PID: 3118 (mongod)
+			Tasks: 23 (limit: 4673)
+		CGroup: /system.slice/mongodb.service
+				└─3118 /usr/bin/mongod --unixSocketPrefix=/run/mongodb --config /
+		
+		feb 13 17:24:34 OPME systemd[1]: Started An object/document-oriented databas
+		p028036@OPME:~$ 
+
+	:::
