@@ -28,7 +28,7 @@ db.DESt02_insertMany.insertMany([
 	  tags:["color"],
 	  size: {h:22, w:8, uom:"und"}
 	}
-])    
+]);
 
 
 
