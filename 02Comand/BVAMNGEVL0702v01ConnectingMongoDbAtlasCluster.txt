@@ -1,0 +1,24 @@
+#Install mongo y compas Cluster Atlas
+
+##0. Crear un cluster de pruebas
+## Como tenemos cuenta ya se puede ingresar
+
+a) https://account.mongodb.com/account/login?nds=true
+	Seleccionar iniciar sesion con google
+
+b) Crear organización : Create new organization : MDB
+
+c) Crear proyecto : Create new project : M001
+
+d) Crear un cluster : Create new cluster  : 
+
+##1. Connecting to the class Atlas cluster - solo lectura para visualizar
+
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+
+##2. Connecting by compas 
+
+p028036@Ether:~$ mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true
+p028036@Ether:~$ mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true
+

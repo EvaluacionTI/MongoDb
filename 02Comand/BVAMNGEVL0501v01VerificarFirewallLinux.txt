@@ -1,0 +1,52 @@
+# Firewall o Cortafuegos en Linux - Ubuntu 18.04
+	MongoDB Enterprise Edition
+
+##1. Concepto
+	 
+		Realizar solicitudes salientes desde su computadora a los servidores de bases de datos que hemos configurado en MongoDB Atlas. 
+		Esos servidores se ejecutan en los puertos 27015 a 27017 en la nube pública de Amazon, AWS.
+
+##2. Confirme que el puerto 27017 no está bloqueado
+
+	http://portquiz.net:27017/
+	
+	Si tiene éxito, verá una carga de página que indica que puede realizar solicitudes salientes en el puerto 27017.
+
+	Si una página no se carga y su solicitud finalmente se agota, el tráfico saliente al puerto 27017 
+	probablemente esté bloqueado en su red local.
+
+##3. Verificación, Conéctese al host y al puerto del clúster Atlas con netcat 
+
+	p028036@Ether:~$ nc -vz cluster0-shard-00-00-jxeqq.mongodb.net 27017
+	
+	:::
+	Connection to cluster0-shard-00-00-jxeqq.mongodb.net 27017 port [tcp/*] succeeded!
+	:::
+	
+	p028036@Ether:~$ 
+
+##4. Alternativa con ping para ver si puede llegar a Atlas
+	Nota: El clúster Atlas de esta clase consta de tres nodos diferentes y debe poder realizar solicitudes salientes a los tres nodos.
+	cluster0-shard-00-00-jxeqq.mongodb.net
+	cluster0-shard-00-01-jxeqq.mongodb.net
+	cluster0-shard-00-02-jxeqq.mongodb.net
+	
+
+
+	p028036@Ether:~$ ping cluster0-shard-00-00-jxeqq.mongodb.net
+	
+	:::
+	PING ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130) 56(84) bytes of data.
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=1 ttl=31 time=141 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=2 ttl=31 time=122 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=3 ttl=31 time=136 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=4 ttl=31 time=118 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=5 ttl=31 time=132 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=6 ttl=31 time=130 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=7 ttl=31 time=127 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=8 ttl=31 time=145 ms
+	64 bytes from ec2-34-195-121-130.compute-1.amazonaws.com (34.195.121.130): icmp_seq=9 ttl=31 time=131 ms
+	:::
+	
+	p028036@Ether:~$ ping cluster0-shard-00-01-jxeqq.mongodb.net
+	p028036@Ether:~$ ping cluster0-shard-00-02-jxeqq.mongodb.net

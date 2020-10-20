@@ -1,0 +1,280 @@
+#Comando Actualizando mondoDB
+
+##0. Connecting to Cluster Atlas - Sanbox
+
+Atlas cluster
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+
+Sanbox cluster
+p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+##1. Actualizando updateOne
+
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.myMovies.updateOne({"title":"Start Trek"},{$set:{"year":2020}});
+:::
+{ "acknowledged" : true, "matchedCount" : 0, "modifiedCount" : 0 }
+:::
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.myMovies.updateOne({"title":"Star Trek"},{$set:{"year":2020}});
+:::
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+:::
+
+##2. Ingreso en masivo para poder revisar los comandos de actualización
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.insertMany( [
+   { item: "canvas", qty: 100, size: { h: 28, w: 35.5, uom: "cm" }, status: "A" },
+   { item: "journal", qty: 25, size: { h: 14, w: 21, uom: "cm" }, status: "A" },
+   { item: "mat", qty: 85, size: { h: 27.9, w: 35.5, uom: "cm" }, status: "A" },
+   { item: "mousepad", qty: 25, size: { h: 19, w: 22.85, uom: "cm" }, status: "P" },
+   { item: "notebook", qty: 50, size: { h: 8.5, w: 11, uom: "in" }, status: "P" },
+   { item: "paper", qty: 100, size: { h: 8.5, w: 11, uom: "in" }, status: "D" },
+   { item: "planner", qty: 75, size: { h: 22.85, w: 30, uom: "cm" }, status: "D" },
+   { item: "postcard", qty: 45, size: { h: 10, w: 15.25, uom: "cm" }, status: "A" },
+   { item: "sketchbook", qty: 80, size: { h: 14, w: 21, uom: "cm" }, status: "A" },
+   { item: "sketch pad", qty: 95, size: { h: 22.85, w: 30.5, uom: "cm" }, status: "A" }
+] );
+
+##3. Actualizar por incremento
+	$inc = 	Incrementa el valor del campo en la cantidad especificada.
+	
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.updateOne({"item":"canvas"},{$inc:{"size.h":2}});
+:::
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+:::
+
+##3. Actualizar por incremento
+	$push = 	Incrementa el valor del campo en la cantidad especificada.
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.updateOne({"item":"canvas"},
+... {$push:
+		{reviews:
+			{"rating":4.5, "date": ISODate(),"reviewer":"Evaluacion MongoDb", "text":"PelículsA de netflix"}
+		}
+	});
+	
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.updateOne({"item":"canvas"},
+... {$push:
+		{reviews:
+			{"rating":4.5, "date": ISODate(),"reviewer":"Evaluacion MongoDb", "text":"PelículsA de netflix"},
+			{"rating":4.6, "date": ISODate(),"reviewer":"Evaluacion MongoDb1", "text":"PelículsB de netflix"},
+			{"rating":4.7, "date": ISODate(),"reviewer":"Evaluacion MongoDb2", "text":"PelículsC de netflix"},
+			{"rating":4.8, "date": ISODate(),"reviewer":"Evaluacion MongoDb3", "text":"PelículsD de netflix"},
+			{"rating":4.9, "date": ISODate(),"reviewer":"Evaluacion MongoDb4", "text":"PelículsE de netflix"}
+		}
+	});
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"item":"canvas"}).pretty()
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713611"),
+	"item" : "canvas",
+	"qty" : 100,
+	"size" : {
+		"h" : 30,
+		"w" : 35.5,
+		"uom" : "cm"
+	},
+	"status" : "A",
+	"reviews" : [
+		{
+			"rating" : 4.5,
+			"date" : ISODate("2020-10-20T05:26:39.594Z"),
+			"reviewer" : "Evaluacion MongoDb",
+			"text" : "Películs de netflix"
+		}
+	]
+}
+
+##4. Eliminar la columna de un documento cuando no lo ubica
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.updateMany({"status":null},
+	{$unset:{
+			"aty":null
+		}
+	});
+
+:::
+	{ "acknowledged" : true, "matchedCount" : 0, "modifiedCount" : 0 }
+:::
+
+##4. Eliminar la columna de un documento cuando lo ubica
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.updateMany({"status":null},
+	{$unset:{
+			"qty":null
+		}
+	});
+
+:::
+	{ "acknowledged" : true, "matchedCount" : 6, "modifiedCount" : 6 }
+:::
+
+##4.1 Lista los que tiene la columna qty con status P
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"status":"P"}).pretty()
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713614"),
+	"item" : "mousepad",
+	"qty" : 25,
+	"size" : {
+		"h" : 19,
+		"w" : 22.85,
+		"uom" : "cm"
+	},
+	"status" : "P"
+}
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713615"),
+	"item" : "notebook",
+	"qty" : 50,
+	"size" : {
+		"h" : 8.5,
+		"w" : 11,
+		"uom" : "in"
+	},
+	"status" : "P"
+}
+
+##4.2. Lista los que no tienen columna qty y con status Actualizando
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"status":"A"}).pretty()
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713611"),
+	"item" : "canvas",
+	"size" : {
+		"h" : 30,
+		"w" : 35.5,
+		"uom" : "cm"
+	},
+	"status" : "A",
+	"reviews" : [
+		{
+			"rating" : 4.5,
+			"date" : ISODate("2020-10-20T05:26:39.594Z"),
+			"reviewer" : "Evaluacion MongoDb",
+			"text" : "Películs de netflix"
+		},
+		{
+			"rating" : 4.5,
+			"date" : ISODate("2020-10-20T05:48:35.034Z"),
+			"reviewer" : "Evaluacion MongoDb",
+			"text" : "PelículsA de netflix"
+		}
+	]
+}
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713612"),
+	"item" : "journal",
+	"size" : {
+		"h" : 14,
+		"w" : 21,
+		"uom" : "cm"
+	},
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713613"),
+	"item" : "mat",
+	"size" : {
+		"h" : 27.9,
+		"w" : 35.5,
+		"uom" : "cm"
+	},
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713618"),
+	"item" : "postcard",
+	"size" : {
+		"h" : 10,
+		"w" : 15.25,
+		"uom" : "cm"
+	},
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713619"),
+	"item" : "sketchbook",
+	"size" : {
+		"h" : 14,
+		"w" : 21,
+		"uom" : "cm"
+	},
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5f8e6ca14f5792040871361a"),
+	"item" : "sketch pad",
+	"size" : {
+		"h" : 22.85,
+		"w" : 30.5,
+		"uom" : "cm"
+	},
+	"status" : "A"
+}
+
+##5. Actualizar los documentos con item = paper
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.updateOne({"item":"paper"},
+... {$set:{"size.uom":"cm", "status":"P"},
+... $currentDate:{lastModified:true}
+... });
+
+:::
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+:::
+
+###5.1 Buscando para verificar
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"item":"paper"}).pretty()
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713616"),
+	"item" : "paper",
+	"qty" : 100,
+	"size" : {
+		"h" : 8.5,
+		"w" : 11,
+		"uom" : "cm"
+	},
+	"status" : "P",
+	"lastModified" : ISODate("2020-10-20T15:29:19.707Z")
+}
+
+##6. Actualizar varios documentos
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.updateMany({"qty":{$lt:50}},
+	{$set:{"size.uom":"cm", "status":"P"},
+	$currentDate:{lastModified:true}
+	});
+:::
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+:::
+
+###6.1 Buscando para verificar
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"qty":{$lt:50}}).pretty();
+{
+	"_id" : ObjectId("5f8e6ca14f57920408713614"),
+	"item" : "mousepad",
+	"qty" : 25,
+	"size" : {
+		"h" : 19,
+		"w" : 22.85,
+		"uom" : "cm"
+	},
+	"status" : "P",
+	"lastModified" : ISODate("2020-10-20T16:40:09.529Z")
+}
+
+##5. Laboratorio 2.6: Operadores de actualización
+
+Problema:
+
+Para trabajar en este laboratorio, debe conectarse al clúster de sandbox en el que ha importado la colección video.movieDetails .
+
+Suponga que desea actualizar el valor del campo de plot de un documento de nuestra colección movieDetails para corregir un error tipográfico. 
+¿Cuál de los siguientes operadores y modificadores de actualización necesitaría utilizar para hacer esto?
+
+Rpta
+$set
+

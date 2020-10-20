@@ -1,0 +1,32 @@
+#Comando Eliminando mongoDB
+
+##0. Connecting to Cluster Atlas - Sanbox
+
+Atlas cluster
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+
+Sanbox cluster
+p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+##1. Eliminando deleteOne con status =A
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"status":"A"}).count();
+5
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.deleteOne({"status":"A"});
+{ "acknowledged" : true, "deletedCount" : 1 }
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"status":"A"}).count();
+4
+
+##2. Eliminando todos los que tienen status "A"
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.deleteMany({"status":"A"});
+:::
+{ "acknowledged" : true, "deletedCount" : 4 }
+:::
+
+MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.C_ELECTRICA.find({"status":"A"}).count();
+:::
+0
+:::

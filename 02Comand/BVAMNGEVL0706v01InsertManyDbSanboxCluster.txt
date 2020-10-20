@@ -1,0 +1,54 @@
+#Comando InsertMany
+
+
+##0. Connecting to Cluster Atlas - Sanbox
+
+Atlas cluster
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+p028036@Ether:~$ mongo mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+
+Sanbox cluster
+p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+
+##1. Insertanndo many
+
+
+db.myMovies.insertMany(
+  [
+    {
+      "_id" : "tt0084726",
+      "title" : "Star Trek II: The Wrath of Khan",
+      "year" : 1982,
+      "type" : "movie"
+    },
+    {
+      "_id" : "tt0796366",
+      "title" : "Star Trek",
+      "year" : 2009,
+      "type" : "movie"
+    },
+    {
+      "_id" : "tt0084726",
+      "title" : "Star Trek II: The Wrath of Khan",
+      "year" : 1982,
+      "type" : "movie"
+    },
+    {
+      "_id" : "tt1408101",
+      "title" : "Star Trek Into Darkness",
+      "year" : 2013,
+      "type" : "movie"
+    },
+    {
+      "_id" : "tt0117731",
+      "title" : "Star Trek: First Contact",
+      "year" : 1996,
+      "type" : "movie"
+    }
+  ],
+  {
+    ordered: false
+  }
+);

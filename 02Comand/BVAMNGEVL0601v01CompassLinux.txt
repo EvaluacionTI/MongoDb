@@ -1,0 +1,124 @@
+# Compass o Cortafuegos en Linux - Ubuntu 18.04
+	MongoDB Enterprise Edition
+
+##1. Download for linux
+	 
+		https://www.mongodb.com/try/download/compass
+
+	:::
+		Version: 1.22.1 Stable
+		Platform : Ubuntu 64-bit (14.04+)
+		Package: deb
+	:::
+	
+##2. Using the connection string:
+
+	Paste this string in the connection string field and hit CONNECT.
+
+	mongodb+srv://m001-student:m001-mongodb-basics@cluster0-jxeqq.mongodb.net/test
+	
+	Adding this connection string as a favorite allows you to easily reconnect to our class MongoDB 
+	deployment after closing and restarting Compass.
+	
+##3. Conexión al clúster de atlas de clases desde el shell mongo
+
+	a)	Utilice el siguiente comando para conectarse al clúster de clase Atlas. 
+		Tenga en cuenta que la cadena de conexión que se muestra a continuación es diferente de la que hemos usado en el video. 
+		Esto no afecta la naturaleza de alta disponibilidad del clúster. 
+		Para leer más, consulte la sección Lectura opcional a continuación.
+
+	p028036@Ether:~$ mongo "mongodb+srv://cluster0-jxeqq.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+	
+	:::
+	MongoDB shell version v4.4.1
+	connecting to: mongodb://cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/test?authSource=admin&compressors=disabled&gssapiServiceName=mongodb&replicaSet=Cluster0-shard-0&ssl=true
+	Implicit session: session { "id" : UUID("1ea2bc00-c2f2-4f5e-90c0-4468dd50fc1f") }
+	MongoDB server version: 4.2.9
+	WARNING: shell and server versions do not match
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY> 
+	:::
+	
+##4. Algunos comandos para el cluster0-jxeqq
+	
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY> show dbs
+	
+	:::
+	100YWeatherSmall  0.128GB
+	admin             0.000GB
+	aggregations      0.068GB
+	citibike          0.363GB
+	city              0.002GB
+	config            0.017GB
+	coursera-agg      0.083GB
+	feedback          0.000GB
+	local             0.937GB
+	mflix             0.424GB
+	results           0.000GB
+	ships             0.001GB
+	video             0.501GB
+	:::
+	
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY> show dbs
+
+##4.1 Cambiar de bd
+	
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY> use video
+	:::
+	switched to db video
+	:::
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY> 
+	
+##4.2 Collections
+
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY> show collections
+	
+	:::
+	movies
+	:::
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY>
+
+##4.3 Visualizando la collections
+
+	MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.movies.find().pretty()
+	
+	:::
+	{
+		"_id" : ObjectId("58c59c6a99d4ee0af9e0c34e"),
+		"title" : "Bateau-mouche sur la Seine",
+		"year" : 1896,
+		"imdbId" : "tt0000042",
+		"genre" : "Documentary, Short",
+		"viewerRating" : 3.8,
+		"viewerVotes" : 17,
+		"director" : "Georges Mèliès"
+	}
+	{
+		"_id" : ObjectId("58c59c6a99d4ee0af9e0c325"),
+		"title" : "Carmencita",
+		"year" : 1894,
+		"imdbId" : "tt0000001",
+		"mpaaRating" : "NOT RATED",
+		"genre" : "Documentary, Short",
+		"viewerRating" : 5.9,
+		"viewerVotes" : 1032,
+		"runtime" : 1,
+		"director" : "William K.L. Dickson",
+		"cast" : [
+			"Carmencita"
+		],
+		"plot" : "Performing on what looks like a small wooden stage, wearing a dress with a hoop skirt and white high-heeled pumps, Carmencita does a dance with kicks and twirls, a smile always on her face."
+	}
+	{
+		"_id" : ObjectId("58c59c6a99d4ee0af9e0c340"),
+		"title" : "Watering the Flowers",
+		"year" : 1896,
+		"imdbId" : "tt0000035",
+		"genre" : "Short",
+		"viewerRating" : 5.3,
+		"viewerVotes" : 33,
+		"director" : "Georges Mèliès"
+	}
+	:::
+	
+	
+	

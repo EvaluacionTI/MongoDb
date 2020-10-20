@@ -1,0 +1,102 @@
+# Instalación de Mongo en Linux - Ubuntu 18.04
+	MongoDB Enterprise Edition
+
+## 1. Concepto
+	
+	MongoDB es una base de datos NoSQL que ofrece alto rendimiento, alta disponibilidad y escalado automático de la base de datos de nivel empresarial. 
+	MongoDB es una base de datos NoSQL, por lo que no puede usar SQL (lenguaje de consulta estructurado) para insertar y recuperar datos, y no almacena
+	datos en tablas como MySQL o Postgres. Los datos se almacenan en una estructura de "documento" en formato JSON (llamada BSON en MongoDB). 
+
+	
+## 2. Actualizaciones de linux 18.04
+
+### 2.1. Actualice los componentes del servidor
+
+	p028036@MongoElastic:~$sudo apt-get update
+
+### 2.2. Reiniciar el servidor
+
+	p028036@MongoElastic:~$reboot
+
+## 3. Herramientas requeridas (git, curl, wget)
+
+		git  : Control de cambios
+		curl : Para invocaciones por comando de url
+		wget : Para descargar componentes directmente desde el repositorio
+	
+	3.1. p028036@MongoElastic:~$sudo apt install curl
+	
+	3.2. p028036@MongoElastic:~$sudo apt install git
+
+	3.3. Para la versión 18.04 de mongo y ubuntu eliminar estas dependencias 
+	
+		p028036@MongoElastic:~$sudo apt purge mongodb
+
+## 4. Instalación de Mongo
+
+	Nota: -qO, no es un cero sino una "O" en mayúscula. El resultado debe ser OK.
+
+###4.1 Importando la clave publica utilizada por el sistema de gestion de paquetes
+
+	Desde un terminal, emita el siguiente comando para importar la clave GPG pública MongoDB desde
+	
+	p028036@MongoElastic:~$wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+						   wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+
+	La operación debe responder con un OK. Si recibe un error que indica que gnupgno está instalado, puede instalarlo y las bibliotecas necesarias con el siguiente comando:
+		sudo apt-get install gnupg
+
+###4.2 Crea una lista de file para mongodb:  /etc/apt/sources.list.d/mongodb-enterprise.list
+
+	p028036@MongoElastic:~$echo "deb [ arch=amd64 ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
+						   echo "deb [ arch=amd64,arm64,s390x ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
+
+
+	a) Visualizado el contenido del archivo mongodb-enterprise.list
+
+	p028036@MongoElastic:~$vim /etc/apt/sources.list.d/mongodb-enterprise.list
+
+
+###4.3.Reload local package database
+
+	root@Ether:/home/p028036# sudo apt-get update
+
+###4.4 Install the MongoDB Enterprise packages.
+	a) Install MongoDB Enterprise.
+	
+	root@Ether:/home/p028036# sudo apt-get install -y mongodb-enterprise
+
+	b) Install a specific release of MongoDB Enterprise.
+	Para instalar una versión específica, debe especificar cada paquete de componentes individualmente junto con el número de versión, 
+	como en el siguiente ejemplo:
+	
+	root@Ether:/home/p028036# sudo apt-get install -y mongodb-enterprise=4.4.1 mongodb-enterprise-server=4.4.1 mongodb-enterprise-shell=4.4.1 mongodb-enterprise-mongos=4.4.1 mongodb-enterprise-tools=4.4.1
+
+##5. Ejecute MongoDB Enterprise Edition
+	
+	a) De forma predeterminada, la instancia de MongoDB almacena:
+	
+	sus archivos de datos en /var/lib/mongodb
+	sus archivos de registro en /var/log/mongodb
+
+	b) De forma predeterminada, MongoDB se ejecuta con la mongodb cuenta de usuario. 
+	   Si cambia el usuario que ejecuta el proceso de MongoDB, también debe modificar el permiso a los 
+	   directorios /var/lib/mongodb y /var/log/mongodb 
+	   para dar acceso a este usuario a estos directorios.
+	
+##6. Sistema de inicialización
+
+	a) Para ejecutar y administrar su mongod proceso, utilizará el sistema de inicio integrado de su sistema operativo.
+	   Las versiones recientes de Linux tienden a usar systemd (que usa el systemctl comando), mientras que 
+	   las versiones anteriores de Linux tienden a usar System V init (que usa el service comando)
+	
+	Si no está seguro de qué sistema de inicio usa su plataforma, ejecute el siguiente comando:
+	
+	p028036@Ether:~$ ps --no-headers -o comm 1
+	:::
+		systemd
+	:::
+	
+
+
+

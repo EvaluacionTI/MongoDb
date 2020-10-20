@@ -1,0 +1,112 @@
+# Iniciar de Mongo en Linux - Ubuntu 18
+
+## 1. Concepto
+	
+	Iniciar una instancia de MongoDB
+	
+##0. Sistema de inicialización
+
+	a) Para ejecutar y administrar su mongod proceso, utilizará el sistema de inicio integrado de su sistema operativo.
+	   Las versiones recientes de Linux tienden a usar systemd (que usa el systemctl comando), mientras que 
+	   las versiones anteriores de Linux tienden a usar System V init (que usa el service comando)
+	
+	Si no está seguro de qué sistema de inicio usa su plataforma, ejecute el siguiente comando:
+	
+	p028036@Ether:~$ ps --no-headers -o comm 1
+	:::
+		systemd
+	::: 
+
+
+##1. Revisando el estatus de mongod 
+
+	p028036@Ether:~$ sudo systemctl status mongod
+	
+	:::
+	● mongod.service - MongoDB Database Server
+	Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset: 
+	Active: inactive (dead)
+		Docs: https://docs.mongodb.org/manual
+	:::
+	p028036@Ether:~$
+
+##2. Inicie MongoDB.
+	
+	p028036@Ether:~$ sudo systemctl start mongod
+	
+##3. Revisando el status de mongod
+	p028036@Ether:~$ sudo systemctl status mongod
+	
+	:::
+	● mongod.service - MongoDB Database Server
+	Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset: 
+	Active: active (running) since Wed 2020-09-16 01:57:49 -05; 4s ago
+		Docs: https://docs.mongodb.org/manual
+	Main PID: 2879 (mongod)
+	CGroup: /system.slice/mongod.service
+			└─2879 /usr/bin/mongod --config /etc/mongod.conf
+	
+	set 16 01:57:49 Ether systemd[1]: Started MongoDB Database Server.
+	lines 1-9/9 (END)
+	:::
+
+	
+##4. Detenga MongoDB.
+
+	p028036@Ether:~$ sudo systemctl stop mongod
+
+	a) Verificando el estatus de mongod
+	
+	p028036@Ether:~$ sudo systemctl status mongod
+	:::
+	● mongod.service - MongoDB Database Server
+	Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset: 
+	Active: inactive (dead)
+		Docs: https://docs.mongodb.org/manual
+	
+	set 16 01:57:49 Ether systemd[1]: Started MongoDB Database Server.
+	set 16 02:01:29 Ether systemd[1]: Stopping MongoDB Database Server...
+	set 16 02:01:29 Ether systemd[1]: Stopped MongoDB Database Server.
+	lines 1-8/8 (END)
+	:::
+
+
+##5. Restart MongoDB
+
+	p028036@Ether:~$ sudo systemctl status mongod
+	:::
+	● mongod.service - MongoDB Database Server
+	Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset: 
+	Active: active (running) since Wed 2020-09-16 02:03:33 -05; 7s ago
+		Docs: https://docs.mongodb.org/manual
+	Main PID: 2937 (mongod)
+	CGroup: /system.slice/mongod.service
+			└─2937 /usr/bin/mongod --config /etc/mongod.conf
+	
+	set 16 02:03:33 Ether systemd[1]: Started MongoDB Database Server.
+	lines 1-9/9 (END)
+	:::
+	
+## 5. Begin using MongoDB
+
+	Inicie shell mongo en la misma máquina host que mongod. 
+	Puede ejecutar el shell mongo sin ninguna opción de línea de comandos para conectarse a un mongod que se está ejecutando en su localhost
+	con el puerto predeterminado 27017:
+	
+
+	p028036@Ether:~$ mongo
+	
+	:::
+	MongoDB shell version v4.4.1
+	connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+	Implicit session: session { "id" : UUID("5f0389b5-3fc2-4c97-b91a-ac31ff1bd501") }
+	MongoDB server version: 4.4.1
+	---
+	The server generated these startup warnings when booting: 
+			2020-09-16T02:03:33.362-05:00: ***** SERVER RESTARTED *****
+			2020-09-16T02:03:33.381-05:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+			2020-09-16T02:03:34.138-05:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+	---
+	MongoDB Enterprise > 
+	:::
+

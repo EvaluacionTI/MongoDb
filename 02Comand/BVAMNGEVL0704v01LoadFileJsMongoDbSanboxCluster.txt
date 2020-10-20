@@ -1,0 +1,20 @@
+#Load un file js a Mongo
+
+##1. Crear una carpeta
+p028036@Ether:~/Documentos$ cd M001
+
+##2. Copiar el archivo loadMovieDetailsDataset.js en la carpeta
+p028036@Ether:~/Documentos/M001$ ls -l
+total 1324
+-rw-r--r-- 1 p028036 p028036 1355612 set 22 22:15 loadMovieDetailsDataset.js
+
+##3. En la carpeta creada connecting
+
+p028036@Ether:~/Documentos/M001$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+
+##4. Load el file json
+
+
+p028036@Ether:~/Documentos/M001$ load('loadMovieDetailsDataset.js')
+

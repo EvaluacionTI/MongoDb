@@ -1,0 +1,9 @@
+#Install mongo y compas Cluster Sanbox
+
+##1. Connecting to the class sanbox cluster wirte - read
+
+p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+##2. Connecting by compas 
+
+mongodb://m001-student:m001-mongodb-basics@sandbox-shard-00-02.o2sri.mongodb.net:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=true

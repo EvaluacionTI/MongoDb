@@ -1,0 +1,132 @@
+# Mongo DB
+
+##1. Creando un cluster
+
+###1.1 Creando una Organización
+	MDBU
+###1.2 Creando un Proyecto
+	M001
+###1.3 Creando un Cluster
+	sandbox
+###1.4. Creando una Base de datos
+	username: m001-student
+	password: m001-mongodb-basics
+
+##2. Conexion con shell
+
+###2.1. Esta conexion es para el cluste de solo lectura
+mongo "mongodb+srv://cluster0-jxeqq.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+###2.2. Esta conexion es para el cluster SANDBOX
+
+Ej. de conexion
+mongo "mongodb+srv://sandbox-xxxxx.mongodb.net/test"  --username m001-student --password m001-mongodb-basics
+
+Esta es la verdadera
+mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+:::
+	p028036@Ether:~$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+	MongoDB shell version v4.4.1
+	connecting to: mongodb://sandbox-shard-00-01.o2sri.mongodb.net:27017,
+							 sandbox-shard-00-00.o2sri.mongodb.net:27017,
+							 sandbox-shard-00-02.o2sri.mongodb.net:27017/test?authSource=admin&compressors=disabled&gssapiServiceName=mongodb&replicaSet=atlas-2tog3l-shard-0&ssl=true
+	Implicit session: session { "id" : UUID("bfac0349-0a76-42ec-a4f8-f980c7642ced") }
+	MongoDB server version: 4.2.9
+	WARNING: shell and server versions do not match
+	Error while trying to show server startup warnings: user is not allowed to do action [getLog] on [admin.]
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY>	
+:::
+
+##3. Cargar un archivo js
+	loadMovieDetailsDataset.js
+	
+	a) Crear el directorio M001
+	b) Copiar el archivo js
+	c) Ubicarse en la carpeta e iniciar mongo
+	
+	p028036@Ether:~/Documentos/M001$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+
+	:::
+		p028036@Ether:~/Documentos/M001$ mongo "mongodb+srv://sandbox.o2sri.mongodb.net/test" --username m001-student --password m001-mongodb-basics
+		MongoDB shell version v4.4.1
+		connecting to: mongodb://sandbox-shard-00-02.o2sri.mongodb.net:27017,sandbox-shard-00-01.o2sri.mongodb.net:27017,sandbox-shard-00-00.o2sri.mongodb.net:27017/test?authSource=admin&compressors=disabled&gssapiServiceName=mongodb&replicaSet=atlas-2tog3l-shard-0&ssl=true
+		Implicit session: session { "id" : UUID("0bfeb9b6-2719-4914-ab31-024db81a0064") }
+		MongoDB server version: 4.2.9
+		WARNING: shell and server versions do not match
+		Error while trying to show server startup warnings: user is not allowed to do action [getLog] on [admin.]
+		MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY>
+	:::
+
+	d) Ejecutar comando load
+	
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> load('loadMovieDetailsDataset.js')
+
+	:::
+	true
+	:::
+	
+	e) Visualizar la base de datos
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> show dbs
+	
+	:::
+		admin  0.000GB
+		local  4.373GB
+		video  0.001GB
+		MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY>
+	:::
+
+##4. Activando la base de datos video
+
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> use video
+	
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> show dbs
+	:::
+		admin  0.000GB
+		local  4.373GB
+		video  0.001GB
+	:::
+	
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> show collections
+	:::
+		movieDetails
+	:::
+	
+	
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.movieDetails.find().pretty()
+	:::
+		{
+		"_id" : ObjectId("5f6abf1943a1e6720fed41b5"),
+		"title" : "Once Upon a Time in the West",
+		"year" : 1968,
+		"rated" : "PG-13",
+		"runtime" : 175,
+		"countries" : [
+			"Italy",
+			"USA",
+			"Spain"
+		],
+		"genres" : [
+			"Western"
+		],
+		"director" : "Sergio Leone",
+	:::
+	
+##5. Acceso a mongo compas
+	
+	a) Obtenido desde MDBU / M001
+
+	sandbox-shard-00-02.o2sri.mongodb.net
+	
+##6. Contar la cantidad de filas
+
+	MongoDB Enterprise atlas-2tog3l-shard-0:PRIMARY> db.movieDetails.find({genres:"Comedy"}).count()
+	:::
+	737
+	:::
+	
+	
+	
+
+	
+	
